@@ -8,7 +8,7 @@ pt:
 
   field_redmine_ldap_sync_groupname_pattern: "Filtro regex de grupos"
   field_redmine_ldap_sync_group_search_filter: "Filtro de pesquisa de grupos"
-
+  field_redmine_ldap_sync_user_search_filter: "User search filter"
   field_redmine_ldap_sync_must_be_member_of: "Devem ser membros de"
   field_redmine_ldap_sync_add_to_group: "Adicionar ao grupo"
   field_redmine_ldap_sync_create_groups: "Criar novos grupos"
