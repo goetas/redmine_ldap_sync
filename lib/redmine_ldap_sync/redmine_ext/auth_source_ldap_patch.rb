@@ -85,13 +85,16 @@ module RedmineLdapSync
             user_filter &= Net::LDAP::Filter.construct( settings[:user_search_filter] ) if settings[:user_search_filter].present?
 
             attr_enabled = 'userAccountControl'
+			attr_enabled = settings[:user_enabled_attr] if settings[:user_enabled_attr].present?
             users = {:enabled => [], :disabled => []}
             
             ldap_con.search(:base => self.base_dn,
                             :filter => user_filter,
                             :attributes => [self.attr_login, attr_enabled],
                             :return_result => false) do |entry|
-              if entry[attr_enabled] && entry[attr_enabled][0].to_i & 2 != 0
+              if attr_enabled=='userAccountControl' && entry[attr_enabled] && entry[attr_enabled][0].to_i & 2 != 0
+                users[:disabled] << entry[self.attr_login][0]
+              elsif attr_enabled.index('samba')=!nil && entry[attr_enabled] && entry[attr_enabled][0].index('D') != nil
                 users[:disabled] << entry[self.attr_login][0]
               else
                 users[:enabled] << entry[self.attr_login][0]
