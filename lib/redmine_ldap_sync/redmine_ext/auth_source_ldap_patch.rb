@@ -94,7 +94,7 @@ module RedmineLdapSync
                             :return_result => false) do |entry|
               if attr_enabled=='userAccountControl' && entry[attr_enabled] && entry[attr_enabled][0].to_i & 2 != 0
                 users[:disabled] << entry[self.attr_login][0]
-              elsif attr_enabled.index('samba')=!nil && entry[attr_enabled] && entry[attr_enabled][0].index('D') != nil
+              elsif attr_enabled.index('samba') != nil && entry[attr_enabled] && entry[attr_enabled][0].index('D') != nil
                 users[:disabled] << entry[self.attr_login][0]
               else
                 users[:enabled] << entry[self.attr_login][0]
