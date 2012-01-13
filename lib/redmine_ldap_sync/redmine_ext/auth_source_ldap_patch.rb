@@ -84,7 +84,10 @@ module RedmineLdapSync
             user_filter = Net::LDAP::Filter.eq( 'objectClass', settings[:class_user] )
             user_filter &= Net::LDAP::Filter.construct( settings[:user_search_filter] ) if settings[:user_search_filter].present?
 
-            attr_enabled = settings[:user_enabled_attr] ? settings[:user_enabled_attr]  : 'userAccountControl' 
+            attr_enabled = 'userAccountControl'
+            if settings[:user_enabled_attr] && settings[:user_enabled_attr].length > 0
+              attr_enabled =  settings[:user_enabled_attr]
+            end
 
             users = {:enabled => [], :disabled => []}
             
